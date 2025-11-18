@@ -1,0 +1,13 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "Azure": {
+    "StorageAccountName": "YOUR_STORAGE_ACCOUNT_NAME",
+    "StorageAccountKey": "YOUR_STORAGE_ACCOUNT_KEY",
+    "Container": "YOUR_CONTAINER_NAME"
+  }
+}
