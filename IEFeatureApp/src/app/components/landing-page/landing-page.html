@@ -1,0 +1,27 @@
+<nav class="navbar">
+  <div class="title">Loan Import System</div>
+</nav>
+
+<h2>Import History</h2>
+
+<table class="imports-table">
+  <thead>
+    <tr>
+      <th>Import Date</th>
+      <th>File Name</th>
+      <th>Rows</th>
+      <th>View</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let imp of importsList">
+      <td>{{ imp.importDate }}</td>
+      <td>{{ imp.fileName }}</td>
+      <td>{{ imp.rowCount }}</td>
+      <td>
+        <a [routerLink]="['/import', imp.id]">View</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Imported File Details</h2>
+  
+  <div class="controls">
+    <button class="export-btn" (click)="exportJson()">Download JSON</button>
+    <a routerLink="/landing" class="back-link">← Back to List</a>
+  </div>
+
+  <ejs-grid [dataSource]="importData" allowPaging="true" height="450">
+    <e-columns>
+      <e-column *ngFor="let col of columns"
+        [field]="col.field"
+        [headerText]="col.headerText"
+        [width]="col.width"></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

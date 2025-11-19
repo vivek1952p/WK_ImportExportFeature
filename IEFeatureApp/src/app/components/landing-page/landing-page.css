@@ -1,0 +1,59 @@
+/* .navbar {
+  background: #1a73e8;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #1166c7 100%);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 2rem;
+}
+
+.import-btn input {
+  display: none;
+}
+
+.import-btn {
+  background: white;
+  color: #1a73e8;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.imports-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.imports-table th, .imports-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.imports-table th {
+  background: #f1f1f1;
+}
+
+.imp-files {
+  background: white;
+  color: #667eea;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
