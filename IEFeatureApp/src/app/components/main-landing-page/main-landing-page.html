@@ -44,7 +44,8 @@
     <ejs-grid 
       #grid 
       [dataSource]="allRows"
-      [allowPaging]="false"
+      [allowPaging]="true"
+      [pageSettings]="{ pageSize: 10, pageSizes: [10, 20, 50, 100] }"
       [allowSorting]="true"
       [allowFiltering]="true"
       [filterSettings]="{ type: 'Menu' }"

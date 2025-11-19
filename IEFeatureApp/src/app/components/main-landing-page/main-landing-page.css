@@ -298,3 +298,97 @@ div[role="region"] {
   background-color: #1a2332;
   color: #e4e9f2;
 }
+
+/* Pagination styles */
+::ng-deep .e-pager {
+  background: #e3f2fd;
+  border-top: 2px solid #5dade2;
+}
+
+::ng-deep .e-pager .e-numericitem {
+  color: #2d3748;
+}
+
+::ng-deep .e-pager .e-currentitem {
+  background: #5dade2;
+  color: white;
+}
+
+::ng-deep .e-pager .e-icons {
+  color: #2d3748;
+}
+
+.container.dark-theme ::ng-deep .e-pager {
+  background: #1e2a3a;
+  border-top: 2px solid #3498db;
+  color: #e4e9f2;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-currentitem {
+  background: #3498db;
+  color: white;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-numericitem {
+  color: #e4e9f2;
+  background: transparent;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-numericitem:hover {
+  background: #2c3e50;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-icons {
+  color: #e4e9f2;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-pagercontainer {
+  background: #1e2a3a;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-parentmsgbar {
+  color: #e4e9f2;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-pagesizes {
+  background: #2c3e50;
+  color: #e4e9f2;
+  border-color: #34495e;
+}
+
+.container.dark-theme ::ng-deep .e-pager .e-dropdownbase {
+  background: #2c3e50;
+  color: #e4e9f2;
+}
+
+/* Scrollbar styles */
+.container ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.container ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.container ::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 10px;
+}
+
+.container ::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+.container.dark-theme ::-webkit-scrollbar-track {
+  background: #2c3e50;
+}
+
+.container.dark-theme ::-webkit-scrollbar-thumb {
+  background: #000000;
+}
+
+.container.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}

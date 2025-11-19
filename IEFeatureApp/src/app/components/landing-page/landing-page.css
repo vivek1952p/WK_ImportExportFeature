@@ -239,3 +239,35 @@ div[role="main"].dark-theme .imports-table a:hover {
   background: #3498db;
   color: white;
 }
+
+/* Scrollbar styles */
+div[role="main"] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+div[role="main"] ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+div[role="main"] ::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 10px;
+}
+
+div[role="main"] ::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+div[role="main"].dark-theme ::-webkit-scrollbar-track {
+  background: #2c3e50;
+}
+
+div[role="main"].dark-theme ::-webkit-scrollbar-thumb {
+  background: #000000;
+}
+
+div[role="main"].dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
