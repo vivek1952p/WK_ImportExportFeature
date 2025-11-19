@@ -1,39 +1,71 @@
-<div class="container">
-  <nav class="navbar">
-    <div class="title">Loan Import System - Main Dashboard</div>
+<div class="container" [class.dark-theme]="isDarkTheme" role="main">
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="title" role="heading" aria-level="1">Loan Import System - Main Dashboard</div>
 
-    <!-- IMPORT BUTTON -->
-    <label class="import-btn">
-      <input type="file" accept="application/json" (change)="onFileSelected($event)" />
-      Import JSON
-    </label>
+    <div class="navbar-actions">
+      <!-- THEME TOGGLE BUTTON -->
+      <button class="theme-toggle" 
+              (click)="toggleTheme()" 
+              [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+              [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+        {{ isDarkTheme ? '☀️' : '💡' }}
+      </button>
 
-    <a class="imp-files" [routerLink]="['/landing']">View Imported Files</a>
+      <!-- IMPORT BUTTON -->
+      <label class="import-btn" 
+             tabindex="0" 
+             role="button" 
+             aria-label="Import JSON file"
+             (keydown.enter)="importFileInput.click()"
+             (keydown.space)="$event.preventDefault(); importFileInput.click()">
+        <input #importFileInput type="file" accept="application/json" (change)="onFileSelected($event)" aria-hidden="true" />
+        Import JSON
+      </label>
+
+      <!-- EXPORT BUTTON -->
+      <button class="export-btn" 
+              (click)="exportToJson()" 
+              aria-label="Export all records to JSON"
+              [attr.aria-disabled]="allRows.length === 0"
+              [disabled]="allRows.length === 0">Export JSON</button>
+
+      <a class="imp-files" 
+         [routerLink]="['/landing']" 
+         role="button" 
+         aria-label="View imported files"
+         tabindex="0">View Imported Files</a>
+    </div>
   </nav>
 
-  <h2>All Imported Loan Records</h2>
+  <h2 role="heading" aria-level="2">All Imported Loan Records</h2>
 
   <!-- MAIN COMBINED GRID -->
-  <ejs-grid 
-    #grid 
-    [dataSource]="allRows"
-    [allowPaging]="false"
-    height="500"
-    [enableHover]="true">
+  <div role="region" aria-label="Loan records table" aria-live="polite">
+    <ejs-grid 
+      #grid 
+      [dataSource]="allRows"
+      [allowPaging]="false"
+      [allowSorting]="true"
+      [allowFiltering]="true"
+      [filterSettings]="{ type: 'Menu' }"
+      height="500"
+      [enableHover]="true"
+      aria-label="Loan records data grid">
 
-  <e-columns>
-    <e-column field="sno" headerText="S.No" width="80"></e-column>
-    <e-column field="LoanID" headerText="Loan ID" width="150"></e-column>
-    <e-column field="AccountNumber" headerText="Account Number" width="200"></e-column>
-    <e-column field="CustomerName" headerText="Customer Name" width="150"></e-column>
-    <e-column field="LoanType" headerText="Loan Type" width="120"></e-column>
-    <e-column field="LoanAmount" headerText="Loan Amount" width="180"></e-column>
-    <e-column field="InterestRate" headerText="Interest Rate" width="180"></e-column>
-    <e-column field="Branch" headerText="Branch" width="200"></e-column>
-    <e-column field="sourceFile" headerText="Imported From" width="200"></e-column>
-  </e-columns>
+    <e-columns>
+      <e-column field="sno" headerText="S.No" width="80" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="LoanID" headerText="Loan ID" width="150" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="AccountNumber" headerText="Account Number" width="200" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="CustomerName" headerText="Customer Name" width="150" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="LoanType" headerText="Loan Type" width="120" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="LoanAmount" headerText="Loan Amount" width="180" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="InterestRate" headerText="Interest Rate" width="180" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="Branch" headerText="Branch" width="200" [allowSorting]="true" [allowFiltering]="true"></e-column>
+      <e-column field="sourceFile" headerText="Imported From" width="200" [allowSorting]="true" [allowFiltering]="true"></e-column>
+    </e-columns>
 
-</ejs-grid>
+  </ejs-grid>
+  </div>
 
 
 </div>

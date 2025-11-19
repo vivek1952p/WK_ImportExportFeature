@@ -1,17 +1,42 @@
-<div class="container">
-  <h2>Imported File Details</h2>
+<div class="container" [class.dark-theme]="isDarkTheme" role="main">
+  <div class="header-section">
+    <h2 role="heading" aria-level="2">Imported File Details</h2>
+    <button class="theme-toggle" 
+            (click)="toggleTheme()" 
+            [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+            [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+      {{ isDarkTheme ? '☀️' : '💡' }}
+    </button>
+  </div>
   
-  <div class="controls">
-    <button class="export-btn" (click)="exportJson()">Download JSON</button>
-    <a routerLink="/landing" class="back-link">← Back to List</a>
+  <div class="controls" role="toolbar" aria-label="File actions">
+    <button class="export-btn" 
+            (click)="exportJson()" 
+            aria-label="Download JSON file"
+            tabindex="0">Download JSON</button>
+    <a routerLink="/landing" 
+       class="back-link" 
+       role="button" 
+       aria-label="Go back to list"
+       tabindex="0">← Back to List</a>
   </div>
 
-  <ejs-grid [dataSource]="importData" allowPaging="true" height="450">
-    <e-columns>
-      <e-column *ngFor="let col of columns"
-        [field]="col.field"
-        [headerText]="col.headerText"
-        [width]="col.width"></e-column>
-    </e-columns>
-  </ejs-grid>
+  <div role="region" aria-label="File data table" aria-live="polite">
+    <ejs-grid [dataSource]="importData" 
+              [allowPaging]="true" 
+              [allowSorting]="true"
+              [allowFiltering]="true"
+              [filterSettings]="{ type: 'Menu' }"
+              height="450"
+              aria-label="Import data grid">
+      <e-columns>
+        <e-column *ngFor="let col of columns"
+          [field]="col.field"
+          [headerText]="col.headerText"
+          [width]="col.width"
+          [allowSorting]="true"
+          [allowFiltering]="true"></e-column>
+      </e-columns>
+    </ejs-grid>
+  </div>
 </div>
