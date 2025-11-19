@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 
 namespace ImportExportApi.Services
 {
-    public interface IImportService
-    {
-        Task<int> ImportJsonAsync(string fileName, string jsonContent);
-        Task<int> ImportFromObjectsAsync(IEnumerable<LoanDto> loans);
-    }
-
     public class ImportService : IImportService
     {
         private readonly ILoanRepository _loanRepository;
