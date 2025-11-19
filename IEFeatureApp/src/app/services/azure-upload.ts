@@ -6,54 +6,27 @@ import { firstValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AzureUploadService{
+export class AzureUploadService {
+
+  private importApiUrl = 'http://localhost:5203/api/import/upload';
 
   constructor(private http: HttpClient) {}
 
-  getSasUrl(fileName: string) {
-    return this.http.post<any>(
-      'http://localhost:5203/api/sas/generate-upload-sas',
-      { fileName }
-    );
-  }
-
-  async uploadFileToAzure(file: File) {
+  async uploadFileThroughApi(file: File) {
     try {
-      console.log('Starting Azure upload for file:', file.name);
-      
-      const fileName = "imports/" + Date.now() + "_" + file.name;
-      console.log('Requesting SAS URL for:', fileName);
-      
-      const sasResponse = await firstValueFrom(
-        this.getSasUrl(fileName)
+      console.log('Uploading file via Import API:', file.name);
+
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+
+      const response = await firstValueFrom(
+        this.http.post<any>(this.importApiUrl, formData)
       );
 
-      if (!sasResponse || !sasResponse.uploadUrl) {
-        throw new Error('Invalid SAS response: ' + JSON.stringify(sasResponse));
-      }
-
-      console.log('SAS URL received:', sasResponse.uploadUrl.split('?')[0]); // Log URL without SAS token
-
-      const uploadUrl = sasResponse.uploadUrl;
-
-      const response = await fetch(uploadUrl, {
-        method: 'PUT',
-        headers: {
-          'x-ms-blob-type': 'BlockBlob',
-          'Content-Type': file.type || 'application/octet-stream'
-        },
-        body: file
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Upload failed with status ${response.status}: ${errorText}`);
-      }
-
-      console.log('File uploaded successfully to Azure');
+      console.log('Import API response:', response);
       return response;
     } catch (error) {
-      console.error('Azure upload error:', error);
+      console.error('Import API upload error:', error);
       throw error;
     }
   }

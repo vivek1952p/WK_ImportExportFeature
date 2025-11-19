@@ -8,6 +8,7 @@ namespace ImportExportApi.Repositories
     {
         Task<int> BulkInsertAsync(IEnumerable<LoanDto> loans);
         Task<bool> CheckDuplicateAsync(string loanId);
+        Task<List<string>> GetExistingLoanIdsAsync(IEnumerable<string> loanIds);
         Task<List<LoanDto>> GetAllLoansAsync();
         Task<LoanDto> GetLoanByIdAsync(string loanId);
     }

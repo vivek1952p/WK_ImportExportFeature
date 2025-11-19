@@ -1,13 +1,16 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { AzureUpload } from './azure-upload';
+import { AzureUploadService } from './azure-upload';
 
-describe('AzureUpload', () => {
-  let service: AzureUpload;
+describe('AzureUploadService', () => {
+  let service: AzureUploadService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AzureUpload);
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
+    service = TestBed.inject(AzureUploadService);
   });
 
   it('should be created', () => {

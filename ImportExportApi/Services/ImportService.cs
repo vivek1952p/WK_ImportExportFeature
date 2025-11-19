@@ -3,6 +3,7 @@ using ImportExportApi.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ImportExportApi.Services
@@ -67,23 +68,32 @@ namespace ImportExportApi.Services
 
             _logger.LogInformation($"All {loans.Count} loans validated successfully");
 
-            // Check for duplicates
-            var duplicates = new List<string>();
-            foreach (var loan in loans)
+            // Check for duplicates in a single query
+            List<string> duplicates;
+            try
             {
-                try
+                var loanIds = loans.Select(l => l.LoanID).Distinct().ToList();
+                _logger.LogInformation($"Checking duplicates for {loanIds.Count} unique LoanIDs");
+                duplicates = await _loanRepository.GetExistingLoanIdsAsync(loanIds);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"Bulk duplicate check failed, falling back to per-record check: {ex.Message}");
+                duplicates = new List<string>();
+                foreach (var loan in loans)
                 {
-                    var exists = await _loanRepository.CheckDuplicateAsync(loan.LoanID);
-                    if (exists)
+                    try
                     {
-                        duplicates.Add(loan.LoanID);
-                        _logger.LogWarning($"Duplicate LoanID found: {loan.LoanID}");
+                        if (await _loanRepository.CheckDuplicateAsync(loan.LoanID))
+                        {
+                            duplicates.Add(loan.LoanID);
+                            _logger.LogWarning($"Duplicate LoanID found: {loan.LoanID}");
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogWarning($"Could not check duplicate for {loan.LoanID}, assuming new record: {ex.Message}");
-                    // Continue anyway - might be first insertion
+                    catch (Exception innerEx)
+                    {
+                        _logger.LogWarning($"Could not check duplicate for {loan.LoanID}, assuming new record: {innerEx.Message}");
+                    }
                 }
             }
 

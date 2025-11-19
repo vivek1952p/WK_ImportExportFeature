@@ -58,11 +58,35 @@ namespace ImportExportApi.Repositories
             }
         }
 
+        public async Task<List<string>> GetExistingLoanIdsAsync(IEnumerable<string> loanIds)
+        {
+            if (loanIds == null || !loanIds.Any())
+            {
+                return new List<string>();
+            }
+
+            try
+            {
+                const string sql = "SELECT LoanID FROM dbo.Loans WHERE LoanID IN @LoanIds";
+                var ids = (await _db.QueryAsync<string>(sql, new { LoanIds = loanIds })).ToList();
+                _logger.LogInformation($"Found {ids.Count} existing loan IDs out of {loanIds.Count()} requested");
+                return ids;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error retrieving existing loan IDs: {ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<List<LoanDto>> GetAllLoansAsync()
         {
             try
             {
-                const string sql = "SELECT * FROM dbo.Loans ORDER BY CreatedAt DESC";
+                const string sql = @"
+                    SELECT LoanID, AccountNumber, CustomerName, LoanType, LoanAmount, InterestRate, Branch
+                    FROM dbo.Loans
+                    ORDER BY LoanID";
                 var loans = await _db.QueryAsync<LoanDto>(sql);
                 return loans.ToList();
             }

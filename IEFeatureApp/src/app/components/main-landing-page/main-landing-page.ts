@@ -119,33 +119,25 @@ export class MainLandingPageComponent implements OnInit {
         return; // STOP — DO NOT UPLOAD
       }
 
-      // 4️⃣ Upload valid file to Azure
-      await this.azureService.uploadFileToAzure(file);
-      console.log("Uploaded to Azure");
+      // 4️⃣ Send file to backend so API can upload + import
+      const apiResponse = await this.azureService.uploadFileThroughApi(file);
+      console.log("API import completed:", apiResponse);
 
-      // 5️⃣ Save in local storage
-      const newImport = {
-        id: Date.now(),
-        fileName: file.name,
-        importDate: new Date().toLocaleString(),
-        rowCount: jsonData.length,
-        data: jsonData
-      };
-
-      this.storage.addImport(newImport);
-
-      // 6️⃣ Reload + refresh grid
-      this.loadAllImportedRows();
+      // 5️⃣ Reload imports + SQL data from backend
+      await this.loadAllData();
 
       if (this.grid) this.grid.refresh();
 
-      alert("✅ File imported successfully!");
+      const inserted = apiResponse?.insertedRows ?? 0;
+      const successMsg = apiResponse?.message || "File imported successfully!";
+      alert(`✅ ${successMsg}\n${inserted} records saved to SQL.`);
 
       event.target.value = "";
 
     } catch (err: any) {
       console.error(err);
-      alert("❌ Error uploading file: " + err.message);
+      const errorMessage = err?.error?.error || err?.message || "Unknown error";
+      alert("❌ Error uploading file: " + errorMessage);
       event.target.value = "";
     }
   }
