@@ -2,8 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { GridModule, PageService } from '@syncfusion/ej2-angular-grids';
+import { GridModule, PageService, SortService, FilterService } from '@syncfusion/ej2-angular-grids';
 import { ImportStorageService } from '../../services/import-storage';
+import { ThemeService } from '../../services/theme';
 import { registerLicense } from '@syncfusion/ej2-base';
 
 registerLicense('Ngo9BigBOggjHTQxAR8/V1JFaF1cX2hIf0x0TXxbf1x1ZFRMY19bQH5PMyBoS35Rc0RjW3ZecXBVQ2ZdUU1wVEFc');
@@ -12,7 +13,7 @@ registerLicense('Ngo9BigBOggjHTQxAR8/V1JFaF1cX2hIf0x0TXxbf1x1ZFRMY19bQH5PMyBoS35
   selector: 'app-import-view',
   standalone: true,
   imports: [CommonModule, GridModule, RouterModule],
-  providers: [PageService],
+  providers: [PageService, SortService, FilterService],
   templateUrl: './import-view.html',
   styleUrls: ['./import-view.css']
 })
@@ -21,8 +22,13 @@ export class ImportViewComponent implements OnInit {
   importData: any[] = [];
   columns: any[] = [];
   fileName: string = 'export';
+  isDarkTheme: boolean = false;
 
-  constructor(private route: ActivatedRoute, private importService: ImportStorageService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private importService: ImportStorageService,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -34,6 +40,14 @@ export class ImportViewComponent implements OnInit {
       const keys = Object.keys(this.importData[0] || {});
       this.columns = keys.map(k => ({ field: k, headerText: k, width: 150 }));
     }
+
+    this.themeService.isDarkTheme$.subscribe(isDark => {
+      this.isDarkTheme = isDark;
+    });
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 
   exportJson() {

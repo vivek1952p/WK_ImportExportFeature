@@ -1,27 +1,39 @@
-<nav class="navbar">
-  <div class="title">Loan Import System</div>
-</nav>
+<div [class.dark-theme]="isDarkTheme" role="main">
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="title" role="heading" aria-level="1">Loan Import System</div>
+    
+    <button class="theme-toggle" 
+            (click)="toggleTheme()" 
+            [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+            [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+      {{ isDarkTheme ? '☀️' : '💡' }}
+    </button>
+  </nav>
 
-<h2>Import History</h2>
+  <h2 role="heading" aria-level="2">Import History</h2>
 
-<table class="imports-table">
-  <thead>
-    <tr>
-      <th>Import Date</th>
-      <th>File Name</th>
-      <th>Rows</th>
-      <th>View</th>
-    </tr>
-  </thead>
+  <table class="imports-table" role="table" aria-label="Import history table">
+    <thead role="rowgroup">
+      <tr role="row">
+        <th role="columnheader" scope="col">Import Date</th>
+        <th role="columnheader" scope="col">File Name</th>
+        <th role="columnheader" scope="col">Rows</th>
+        <th role="columnheader" scope="col">View</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <tr *ngFor="let imp of importsList">
-      <td>{{ imp.importDate }}</td>
-      <td>{{ imp.fileName }}</td>
-      <td>{{ imp.rowCount }}</td>
-      <td>
-        <a [routerLink]="['/import', imp.id]">View</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+    <tbody role="rowgroup">
+      <tr *ngFor="let imp of importsList; let i = index" role="row">
+        <td role="cell">{{ imp.importDate }}</td>
+        <td role="cell">{{ imp.fileName }}</td>
+        <td role="cell">{{ imp.rowCount }}</td>
+        <td role="cell">
+          <a [routerLink]="['/import', imp.id]" 
+             role="button" 
+             tabindex="0" 
+             [attr.aria-label]="'View details for ' + imp.fileName">View</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

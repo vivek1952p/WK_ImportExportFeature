@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ImportStorageService } from '../../services/import-storage';
+import { ThemeService } from '../../services/theme';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,11 +14,22 @@ import { ImportStorageService } from '../../services/import-storage';
 export class LandingPageComponent implements OnInit {
 
   importsList: any[] = [];
+  isDarkTheme: boolean = false;
 
-  constructor(private importService: ImportStorageService) {}
+  constructor(
+    private importService: ImportStorageService,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit() {
     this.loadImports();
+    this.themeService.isDarkTheme$.subscribe(isDark => {
+      this.isDarkTheme = isDark;
+    });
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 
   async loadImports() {

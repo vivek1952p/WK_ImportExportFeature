@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { GridModule, PageService, GridComponent } from '@syncfusion/ej2-angular-grids';
+import { GridModule, PageService, GridComponent, SortService, FilterService } from '@syncfusion/ej2-angular-grids';
 import { ImportStorageService } from '../../services/import-storage';
 import { AzureUploadService } from '../../services/azure-upload';
+import { ThemeService } from '../../services/theme';
 import { registerLicense } from '@syncfusion/ej2-base';
 
 registerLicense('Ngo9BigBOggjHTQxAR8/V1JFaF1cX2hIf0x0TXxbf1x1ZFRMY19bQH5PMyBoS35Rc0RjW3ZecXBVQ2ZdUU1wVEFc');
@@ -12,7 +13,7 @@ registerLicense('Ngo9BigBOggjHTQxAR8/V1JFaF1cX2hIf0x0TXxbf1x1ZFRMY19bQH5PMyBoS35
   selector: 'app-main-landing-page',
   standalone: true,
   imports: [CommonModule, GridModule, RouterModule],
-  providers: [PageService],
+  providers: [PageService, SortService, FilterService],
   templateUrl: './main-landing-page.html',
   styleUrls: ['./main-landing-page.css']
 })
@@ -21,16 +22,25 @@ export class MainLandingPageComponent implements OnInit {
   @ViewChild('grid') grid?: GridComponent;
 
   allRows: any[] = [];
+  isDarkTheme: boolean = false;
 
   requiredHeaders = ["LoanID", "AccountNumber", "CustomerName", "LoanType", "LoanAmount", "InterestRate", "Branch"];
 
   constructor(
     private storage: ImportStorageService,
-    private azureService: AzureUploadService
+    private azureService: AzureUploadService,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit() {
     this.loadFromAzure();
+    this.themeService.isDarkTheme$.subscribe(isDark => {
+      this.isDarkTheme = isDark;
+    });
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 
   // Load imports from Azure on page init
@@ -140,5 +150,30 @@ export class MainLandingPageComponent implements OnInit {
       alert("❌ Error uploading file: " + err.message);
       event.target.value = "";
     }
+  }
+
+  // Export all rows to JSON
+  exportToJson() {
+    if (this.allRows.length === 0) {
+      alert('⚠️ No data to export.');
+      return;
+    }
+
+    // Create clean export data without sno and sourceFile if needed
+    const exportData = this.allRows.map(row => {
+      const { sno, sourceFile, ...cleanRow } = row;
+      return cleanRow;
+    });
+
+    const json = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `all-loan-records-${new Date().getTime()}.json`;
+    a.click();
+
+    URL.revokeObjectURL(url);
   }
 }
