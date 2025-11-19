@@ -21,6 +21,7 @@ export class MainLandingPageComponent implements OnInit {
   @ViewChild('grid') grid?: GridComponent;
 
   allRows: any[] = [];
+  allLoans: any[] = [];
 
   requiredHeaders = ["LoanID", "AccountNumber", "CustomerName", "LoanType", "LoanAmount", "InterestRate", "Branch"];
 
@@ -30,17 +31,24 @@ export class MainLandingPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadFromAzure();
+    this.loadAllData();
   }
 
-  // Load imports from Azure on page init
-  async loadFromAzure() {
+  // Load all data from both Azure Blob (file history) and SQL (loans)
+  async loadAllData() {
     try {
-      console.log('Loading imports from Azure on page load');
-      await this.storage.loadImportsFromAzure();
+      console.log('Loading all data from Azure Blob and SQL...');
+      const data = await this.storage.loadAllData();
+      
+      // Data from blob storage (file history)
       this.loadAllImportedRows();
+      
+      // Data from SQL (loan records)
+      this.allLoans = this.storage.getAllLoans();
+      
+      console.log(`Loaded ${this.allRows.length} rows from imports and ${this.allLoans.length} loans from SQL`);
     } catch (error) {
-      console.error('Error loading from Azure:', error);
+      console.error('Error loading data:', error);
       this.loadAllImportedRows();
     }
   }
