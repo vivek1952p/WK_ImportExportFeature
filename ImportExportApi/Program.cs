@@ -53,11 +53,7 @@ app.UseCors("AllowAngularApp");
 // Map controllers
 app.MapControllers();
 
-<<<<<<< HEAD
-=======
-// Home page route
-app.MapGet("/", () => new { message = "Import Export API", status = "Running" })
-    .WithName("Home");
+// OPTIONAL — Home route
+app.MapGet("/", () => new { message = "Import Export API", status = "Running" });
 
->>>>>>> b21279eacaa66e20a3c055915d01e1eca5932dc5
 app.Run();

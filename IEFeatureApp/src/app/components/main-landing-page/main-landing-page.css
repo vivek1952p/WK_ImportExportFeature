@@ -67,17 +67,18 @@
 }
 
 .export-btn {
-  background: linear-gradient(135deg, #3498db 0%, #5dade2 100%);
-  color: white;
+  background: white;
+  color: #5dade2;
   padding: 12px 24px;
-  border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
   min-width: 150px;
+  text-align: center;
 }
 
 .export-btn:hover:not(:disabled) {

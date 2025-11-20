@@ -8,6 +8,12 @@
             [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
       {{ isDarkTheme ? '☀️' : '💡' }}
     </button>
+
+    <div>
+      <a class="imp-files" 
+         [routerLink]="['/main-landing']" 
+         >Back to Main-Dashboard</a>
+    </div>
   </nav>
 
   <h2 role="heading" aria-level="2">Import History</h2>
