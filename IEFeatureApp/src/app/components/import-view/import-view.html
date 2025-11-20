@@ -1,28 +1,29 @@
 <div class="container" [class.dark-theme]="isDarkTheme" role="main">
-  <div class="header-section">
-    <h2 role="heading" aria-level="2">Imported File Details</h2>
-    <button class="theme-toggle" 
-            (click)="toggleTheme()" 
-            [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
-            [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
-      {{ isDarkTheme ? '☀️' : '💡' }}
-    </button>
-  </div>
-  
-  <div class="controls" role="toolbar" aria-label="File actions">
-    <button class="export-btn" 
-            (click)="exportJson()" 
-            aria-label="Download JSON file"
-            tabindex="0">Download JSON</button>
-    <a routerLink="/landing" 
-       class="back-link" 
-       role="button" 
-       aria-label="Go back to list"
-       tabindex="0">← Back to List</a>
-    <a class="imp-files" 
-         [routerLink]="['/main-landing']" 
-         >Back to Main-Dashboard</a>
-  </div>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="title" role="heading" aria-level="1">Imported File Details</div>
+    
+    <div class="navbar-actions">
+      <button class="export-btn" 
+              (click)="exportJson()" 
+              aria-label="Download JSON file"
+              tabindex="0">Download JSON</button>
+      <a routerLink="/landing" 
+         class="back-link" 
+         role="button" 
+         aria-label="Go back to list"
+         tabindex="0">← Back to List</a>
+      <a class="imp-files" 
+           [routerLink]="['/main-landing']" 
+           >Back to Main-Dashboard</a>
+      
+      <button class="theme-toggle" 
+              (click)="toggleTheme()" 
+              [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+              [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+        {{ isDarkTheme ? '☀️' : '💡' }}
+      </button>
+    </div>
+  </nav>
 
   <div role="region" aria-label="File data table" aria-live="polite">
     <ejs-grid [dataSource]="importData" 

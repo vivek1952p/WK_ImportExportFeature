@@ -3,14 +3,6 @@
     <div class="title" role="heading" aria-level="1">Loan Import System - Main Dashboard</div>
 
     <div class="navbar-actions">
-      <!-- THEME TOGGLE BUTTON -->
-      <button class="theme-toggle" 
-              (click)="toggleTheme()" 
-              [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
-              [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
-        {{ isDarkTheme ? '☀️' : '💡' }}
-      </button>
-
       <!-- IMPORT BUTTON -->
       <label class="import-btn" 
              tabindex="0" 
@@ -34,6 +26,14 @@
          role="button" 
          aria-label="View imported files"
          tabindex="0">View Imported Files</a>
+
+      <!-- THEME TOGGLE BUTTON -->
+      <button class="theme-toggle" 
+              (click)="toggleTheme()" 
+              [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+              [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+        {{ isDarkTheme ? '☀️' : '💡' }}
+      </button>
     </div>
   </nav>
 

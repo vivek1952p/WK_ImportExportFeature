@@ -6,48 +6,64 @@
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
 }
 
-.header-section {
+/* Navbar styling */
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  background: linear-gradient(135deg, #87ceeb 0%, #5dade2 100%);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  margin-bottom: 35px;
+  box-shadow: 0 8px 16px rgba(135, 206, 235, 0.3);
+  transition: all 0.3s ease;
+}
+
+.navbar:hover {
+  box-shadow: 0 12px 24px rgba(135, 206, 235, 0.4);
+}
+
+.navbar .title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
 h2 {
   color: #2d3748;
-  margin-bottom: 0;
-  font-size: 28px;
-  font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.controls {
-  display: flex;
-  gap: 15px;
   margin-bottom: 25px;
-  align-items: center;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 24px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .export-btn {
-  background: linear-gradient(135deg, #3498db 0%, #5dade2 100%);
-  color: white;
-  padding: 12px 28px;
-  border: none;
+  background: white;
+  color: #5dade2;
+  padding: 12px 24px;
+  border: 2px solid transparent;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  text-align: center;
 }
 
 .export-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-color: #5dade2;
 }
 
 .export-btn:focus {
@@ -56,6 +72,7 @@ h2 {
 }
 
 .back-link {
+  background: white;
   color: #5dade2;
   text-decoration: none;
   font-size: 14px;
@@ -63,18 +80,46 @@ h2 {
   padding: 12px 24px;
   border-radius: 8px;
   transition: all 0.3s ease;
-  background: #e3f2fd;
   border: 2px solid transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  text-align: center;
 }
 
 .back-link:hover {
-  background: #5dade2;
-  color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(93, 173, 226, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-color: #5dade2;
 }
 
 .back-link:focus {
+  outline: 3px solid rgba(135, 206, 235, 0.5);
+  outline-offset: 2px;
+}
+
+.imp-files {
+  background: white;
+  color: #5dade2;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  min-width: 150px;
+  text-align: center;
+}
+
+.imp-files:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-color: #5dade2;
+}
+
+.imp-files:focus {
   outline: 3px solid rgba(135, 206, 235, 0.5);
   outline-offset: 2px;
 }
@@ -175,6 +220,15 @@ div[role="region"] {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
+.container.dark-theme .navbar {
+  background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+  box-shadow: 0 8px 16px rgba(15, 52, 96, 0.5);
+}
+
+.container.dark-theme .navbar:hover {
+  box-shadow: 0 12px 24px rgba(15, 52, 96, 0.6);
+}
+
 .container.dark-theme h2 {
   color: #e4e9f2;
 }
@@ -184,18 +238,19 @@ div[role="region"] {
   color: #f39c12;
 }
 
-.container.dark-theme .controls {
-  background: #1e2a3a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.container.dark-theme .export-btn {
-  background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
-}
-
-.container.dark-theme .back-link {
+.container.dark-theme .export-btn,
+.container.dark-theme .back-link,
+.container.dark-theme .imp-files {
   background: #2c3e50;
   color: #87ceeb;
+  border-color: #87ceeb;
+}
+
+.container.dark-theme .export-btn:hover,
+.container.dark-theme .back-link:hover,
+.container.dark-theme .imp-files:hover {
+  background: #34495e;
+  border-color: #5dade2;
 }
 
 .container.dark-theme .back-link:hover {

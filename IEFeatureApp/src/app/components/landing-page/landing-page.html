@@ -2,17 +2,17 @@
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="title" role="heading" aria-level="1">Loan Import System</div>
     
-    <button class="theme-toggle" 
-            (click)="toggleTheme()" 
-            [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
-            [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
-      {{ isDarkTheme ? '☀️' : '💡' }}
-    </button>
-
-    <div>
+    <div class="navbar-actions">
       <a class="imp-files" 
          [routerLink]="['/main-landing']" 
          >Back to Main-Dashboard</a>
+      
+      <button class="theme-toggle" 
+              (click)="toggleTheme()" 
+              [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+              [title]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+        {{ isDarkTheme ? '☀️' : '💡' }}
+      </button>
     </div>
   </nav>
 
