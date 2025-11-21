@@ -30,9 +30,7 @@ export class ImportStorageService {
     return this.allImports.find(x => x.id === id);
   }
 
-  // 7️⃣ Frontend loads:
-  // - File history from Blob list
-  // - Loan data from SQL table
+
   async loadAllData() {
     try {
       console.log('Loading all data from Azure Blob and SQL...');
@@ -50,12 +48,12 @@ export class ImportStorageService {
     }
   }
 
-  // Fetch file history from Azure Blob Storage
+
   async loadImportsFromAzure() {
     try {
       console.log('Loading file history from Azure Blob Storage...');
       
-      // Get list of all blobs
+  
       const listResponse = await firstValueFrom(
         this.http.get<any>(`${this.blobApiUrl}/list-blobs`)
       );
@@ -63,7 +61,7 @@ export class ImportStorageService {
       const blobs = listResponse.blobs || [];
       console.log(`Found ${blobs.length} files in Azure Blob Storage`);
 
-      // Fetch content of each blob
+
       const imports: any[] = [];
 
       for (const blob of blobs) {
@@ -99,7 +97,7 @@ export class ImportStorageService {
     }
   }
 
-  // Fetch loan data from SQL Server
+
   private async loadLoansFromSQL() {
     try {
       console.log('Loading loan records from SQL Server...');
